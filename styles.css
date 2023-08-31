@@ -1,0 +1,64 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.main {
+  width: 100%;
+}
+
+.main > * {
+  width: 100%;
+}
+
+textarea, code {
+  width: 100%;
+  border: 1px solid #ababab;
+  min-height: 200px;
+  padding: 1rem;
+}
+
+textarea:focus {
+  outline: 1px solid #dadada;
+}
+
+.console-container {
+  display: flex;
+  padding: 1rem 0;
+}
+
+.console-container nav {
+  width: 10%;
+  display: flex;
+  flex-direction: column;
+}
+
+.console-container nav button {
+  padding: 0.5rem;
+  background-color: transparent;
+  border: 1px solid #ababab;
+}
+
+.console-container nav button:nth-child(2) {
+  margin-top: 1rem;
+}
+
+.console-container code {
+  flex-grow: 1;
+  height: auto;
+  margin-left: 1rem;
+}
+
+.fade-in {
+  animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
