@@ -12,10 +12,12 @@
   width: 100%;
 }
 
+textarea {
+  min-height: 150px;
+}
 textarea, code {
   width: 100%;
   border: 1px solid #ababab;
-  min-height: 200px;
   padding: 1rem;
 }
 
@@ -29,7 +31,8 @@ textarea:focus {
 }
 
 .console-container nav {
-  width: 10%;
+  width: 5%;
+  min-width: 60px;
   display: flex;
   flex-direction: column;
 }
