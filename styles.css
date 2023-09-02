@@ -19,18 +19,20 @@
 .main > * {
   width: 100%;
 }
-
-textarea {
+.CodeMirror { height: 100%; }
+.editor {
   min-height: 150px;
   height: 100%;
 }
-textarea, code {
+.editor, code {
   width: 100%;
   border: 1px solid #ababab;
+}
+code {
   padding: 1rem;
 }
 
-textarea:focus {
+.editor:focus {
   outline: 1px solid #dadada;
 }
 
@@ -77,4 +79,8 @@ textarea:focus {
   to {
     opacity: 1;
   }
+}
+
+.error {
+  color: red;
 }

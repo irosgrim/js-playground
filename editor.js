@@ -1,16 +1,38 @@
 // if you want to pass code to the iframe: <iframe src="the-editor.com?code=btoa-encoded-string" 
 document.addEventListener("DOMContentLoaded", () => {
-  const editor = document.getElementById("editor");
+
+  // const editor = document.getElementById("editor");
   const consoleOutput = document.querySelector("#console code");
   const urlParams = new URLSearchParams(window.location.search);
-  const encodedCode = urlParams.get('code');
-  let initialCode = `console.log("Hello world!");`;
+  const encodedCode = urlParams.get("code");
+  const theme = urlParams.get("theme");
+  let initialTheme = "";
+  let initialCode = `// pass query param theme=dark or theme=light to change theme
+console.log("Hello world!");
+  `;
+
+  switch(theme) {
+    case "dark":
+      initialTheme = "nord";
+      break;
+    default:
+    case "light":
+      initialTheme = "mdn-like";
+      break;
+  }
 
   if (encodedCode) {
     initialCode = atob(encodedCode);
   }
 
-  editor.value = initialCode;
+  const editor = CodeMirror(document.querySelector('#editor'), {
+      lineNumbers: true,
+      tabSize: 2,
+      value: initialCode,
+      mode: "javascript",
+      theme: initialTheme,
+  });
+  editor.setSize("100%", "100%");
 
   const toConsoleString = (value) => {
     if (Array.isArray(value)) {
@@ -34,21 +56,19 @@ document.addEventListener("DOMContentLoaded", () => {
       return String(value);
 }
 
-const originalConsoleLog = console.log;
-console.log = (...args) => {
-  const formattedArgs = args.map(toConsoleString).join(" ");
-  consoleOutput.innerHTML += formattedArgs + "<br>";
-  originalConsoleLog.apply(console, args);
-};
+  const originalConsoleLog = console.log;
+  console.log = (...args) => {
+    const formattedArgs = args.map(toConsoleString).join(" ");
+    consoleOutput.innerHTML += formattedArgs + "<br>";
+    originalConsoleLog.apply(console, args);
+  };
 
-
-
-  const executeCode = () => {
+  const executeCode = (value) => {
     consoleOutput.innerHTML = "";
     try {
-      new Function(editor.value)();
+      new Function(value)();
     } catch (error) {
-      consoleOutput.innerHTML = "<strong>Error:: </strong>" + error.message;
+      consoleOutput.innerHTML = '<strong class="error">Error:: </strong>' + error.message;
     }
     consoleOutput.classList.add("fade-in");
     consoleOutput.addEventListener("animationend", () =>{
@@ -58,7 +78,7 @@ console.log = (...args) => {
 
   document.addEventListener("click", (e) => {
     if (e.target.id === "execute") {
-        executeCode();
+        executeCode(editor.getValue());
         return;
     }
     if (e.target.id === "reset") {
@@ -67,11 +87,12 @@ console.log = (...args) => {
     }
   });
 
-  editor.addEventListener("keyup", (e) => {
-    if(e.target.value.length) {
-      const encodedCode = btoa(e.target.value);
+  editor.on("keyup",(c, e) => {
+    const currValue = editor.getValue();
+    if(currValue.length) {
+      const encodedCode = btoa(currValue);
       urlParams.set("code", encodedCode);
       window.history.replaceState({}, "", '?' + urlParams.toString());
     }
-  })
+  });
 });

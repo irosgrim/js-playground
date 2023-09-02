@@ -3,11 +3,14 @@
     <head>
         <title>Interactive JS playground</title>
         <link rel="stylesheet" type="text/css" href="./styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/theme/mdn-like.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/theme/nord.min.css"/>
     </head>
     <body>
         <main class="main">
             <section id="editor-container" class="editor-container">
-                <textarea id="editor"></textarea>
+                <div id="editor" class="editor"></div>
             </section>
             <section id="console" class="console-container">
                 <nav id="button-container">
@@ -17,6 +20,8 @@
                 <code></code>
             </section>
         </main>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/javascript/javascript.min.js"></script>
         <script src="./editor.js"></script>
     </body>
 </html>
