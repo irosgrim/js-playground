@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .map(([k, v]) => `${k}: ${toConsoleString(v)}`);
       return `{${objItems.join(", ")}}`;
     } else if (typeof value === "string") {
-      return `"${value}"`;
+      return value;
     } else {
       return String(value);
     }
