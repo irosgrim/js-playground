@@ -15,16 +15,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const toConsoleString = (value) => {
     if (Array.isArray(value)) {
       const arrItems = value.map(toConsoleString);
-      return `[${arrItems.join(", ")}]`;
-    } else if (typeof value === "object" && value !== null) {
-      const objItems = Object.entries(value)
-        .map(([k, v]) => `${k}: ${toConsoleString(v)}`);
-      return `{${objItems.join(", ")}}`;
-    } else if (typeof value === "string") {
-      return value;
-    } else {
-      return String(value);
+      return `(${arrItems.length}) [${arrItems.join(", ")}]`;
     }
+    if (typeof value === "object" && value !== null) {
+      const objItems = Object.entries(value)
+        .map(([k, v]) => {
+          const val = (typeof v === "string") ? `'${toConsoleString(v)}'` : toConsoleString(v);
+          return `${k}: ${val}`;
+        });
+      return `{${objItems.join(", ")}}`;
+    }
+    if (typeof value === "string") {
+      return value;
+    } 
+    if (typeof value === "function") {
+      return "ƒ: " + value;
+    }
+      return String(value);
 }
 
 const originalConsoleLog = console.log;
