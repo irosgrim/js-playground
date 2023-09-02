@@ -12,11 +12,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
   editor.value = initialCode;
 
-  const originalConsoleLog = console.log;
-  console.log = (...args) => {
-    consoleOutput.innerHTML += args.join(" ") + "<br>";
-    originalConsoleLog.apply(console, args);
-  };
+  const toConsoleString = (value) => {
+    if (Array.isArray(value)) {
+      const arrItems = value.map(toConsoleString);
+      return `[${arrItems.join(", ")}]`;
+    } else if (typeof value === "object" && value !== null) {
+      const objItems = Object.entries(value)
+        .map(([k, v]) => `${k}: ${toConsoleString(v)}`);
+      return `{${objItems.join(", ")}}`;
+    } else if (typeof value === "string") {
+      return `"${value}"`;
+    } else {
+      return String(value);
+    }
+}
+
+const originalConsoleLog = console.log;
+console.log = (...args) => {
+  const formattedArgs = args.map(toConsoleString).join(" ");
+  consoleOutput.innerHTML += formattedArgs + "<br>";
+  originalConsoleLog.apply(console, args);
+};
+
+
 
   const executeCode = () => {
     consoleOutput.innerHTML = "";
