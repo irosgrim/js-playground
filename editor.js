@@ -1,7 +1,6 @@
 // if you want to pass code to the iframe: <iframe src="the-editor.com?code=btoa-encoded-string" 
 document.addEventListener("DOMContentLoaded", () => {
 
-  // const editor = document.getElementById("editor");
   const consoleOutput = document.querySelector("#console code");
   const urlParams = new URLSearchParams(window.location.search);
   const encodedCode = urlParams.get("code");
@@ -32,7 +31,6 @@ console.log("Hello world!");
       mode: "javascript",
       theme: initialTheme,
   });
-  editor.setSize("100%", "100%");
 
   const toConsoleString = (value) => {
     if (Array.isArray(value)) {
