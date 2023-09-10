@@ -31,6 +31,7 @@ console.log("Hello world!");
       value: initialCode,
       mode: "javascript",
       theme: initialTheme,
+      autoCloseBrackets: true,
   });
 
   const toConsoleString = (value) => {
